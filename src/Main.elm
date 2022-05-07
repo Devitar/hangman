@@ -1,8 +1,8 @@
 module Main exposing (..)
 
 import Browser
-import Html exposing (Html, button, div, span, text)
-import Html.Attributes exposing (class)
+import Html exposing (Html, button, div, node, span, text)
+import Html.Attributes exposing (class, href, rel)
 import Html.Events exposing (onClick)
 import Http
 import Json.Decode as Decode exposing (Decoder)
@@ -153,12 +153,17 @@ viewGameState gameState =
         hintHtml =
             div [ class <| "hint-text" ] [ text <| "Hint: " ++ gameState.wordData.hint ]
     in
-    div []
+    div [ class <| "view" ]
         [ wordHtml
         , hintHtml
         , buttonsHtml
         , failuresHtml
         , button [ onClick Restart ] [ text "Restart" ]
+        , node "link"
+            [ href "https://fonts.googleapis.com/css2?family=Handlee&display=swap"
+            , rel "stylesheet"
+            ]
+            []
         ]
 
 
