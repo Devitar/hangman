@@ -10,7 +10,6 @@ import Json.Decode as Decode exposing (Decoder)
 import Set exposing (Set)
 
 
-
 ---- MODEL ----
 
 
