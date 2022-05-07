@@ -1,13 +1,13 @@
 module Main exposing (..)
 
--- import Html.Attributes exposing ()
-
 import Browser
-import Html exposing (..)
-import Html.Events exposing (..)
+import Html exposing (Html, button, div, span, text)
+import Html.Attributes exposing (class)
+import Html.Events exposing (onClick)
 import Http
 import Json.Decode as Decode exposing (Decoder)
 import Set exposing (Set)
+
 
 
 ---- MODEL ----
@@ -20,8 +20,14 @@ type Model
 
 
 type alias GameState =
-    { phrase : String
+    { wordData : WordData
     , guesses : Set String
+    }
+
+
+type alias WordData =
+    { word : String
+    , hint : String
     }
 
 
@@ -39,7 +45,7 @@ init =
 type Msg
     = Guess String
     | Restart
-    | NewPhrase (Result Http.Error String)
+    | NewWord (Result Http.Error WordData)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -56,10 +62,10 @@ update msg model =
         Restart ->
             ( Loading, fetchWord )
 
-        NewPhrase result ->
+        NewWord result ->
             case result of
-                Ok phrase ->
-                    ( Running { phrase = phrase, guesses = Set.empty }, Cmd.none )
+                Ok data ->
+                    ( Running { wordData = data, guesses = Set.empty }, Cmd.none )
 
                 Err _ ->
                     ( Error, Cmd.none )
@@ -68,14 +74,16 @@ update msg model =
 fetchWord : Cmd Msg
 fetchWord =
     Http.get
-        { url = "https://snapdragon-fox.glitch.me/word"
-        , expect = Http.expectJson NewPhrase wordDecoder
+        { url = "https://devitar-api.glitch.me/random-word"
+        , expect = Http.expectJson NewWord wordDecoder
         }
 
 
-wordDecoder : Decoder String
+wordDecoder : Decoder WordData
 wordDecoder =
-    Decode.field "word" Decode.string
+    Decode.map2 WordData
+        (Decode.field "word" Decode.string)
+        (Decode.field "hint" Decode.string)
 
 
 
@@ -99,7 +107,7 @@ viewGameState : GameState -> Html Msg
 viewGameState gameState =
     let
         phraseHtml =
-            gameState.phrase
+            gameState.wordData.word
                 |> String.split ""
                 |> List.map
                     (\char ->
@@ -119,7 +127,7 @@ viewGameState gameState =
                 |> div []
 
         phraseSet =
-            gameState.phrase
+            gameState.wordData.word
                 |> String.split ""
                 |> Set.fromList
 
@@ -141,9 +149,13 @@ viewGameState gameState =
                         button [ onClick <| Guess char ] [ text char ]
                     )
                 |> div []
+
+        hintHtml =
+            div [ class <| "hint-text" ] [ text <| "Hint: " ++ gameState.wordData.hint ]
     in
     div []
         [ phraseHtml
+        , hintHtml
         , buttonsHtml
         , failuresHtml
         , button [ onClick Restart ] [ text "Restart" ]
