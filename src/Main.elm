@@ -106,7 +106,7 @@ view model =
 viewGameState : GameState -> Html Msg
 viewGameState gameState =
     let
-        phraseHtml =
+        wordHtml =
             gameState.wordData.word
                 |> String.split ""
                 |> List.map
@@ -126,7 +126,7 @@ viewGameState gameState =
                     )
                 |> div []
 
-        phraseSet =
+        wordSet =
             gameState.wordData.word
                 |> String.split ""
                 |> Set.fromList
@@ -136,7 +136,7 @@ viewGameState gameState =
                 |> Set.toList
                 |> List.filter
                     (\char ->
-                        not <| Set.member char phraseSet
+                        not <| Set.member char wordSet
                     )
                 |> List.map (\char -> span [] [ text char ])
                 |> div []
@@ -154,7 +154,7 @@ viewGameState gameState =
             div [ class <| "hint-text" ] [ text <| "Hint: " ++ gameState.wordData.hint ]
     in
     div []
-        [ phraseHtml
+        [ wordHtml
         , hintHtml
         , buttonsHtml
         , failuresHtml
