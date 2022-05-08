@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "gh-pages": "^3.2.3"
+  },
+  "scripts": {
+    "build": "elm-app build",
+    "deploy": "gh-pages -d build"
+  }
+}
