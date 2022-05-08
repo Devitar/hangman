@@ -104,7 +104,10 @@ view : Model -> Html Msg
 view model =
     case model of
         Loading ->
-            div [] [ text "Loading" ]
+            div [ class "loading-view" ]
+                [ text "Loading (This may take a minute if this is your first time playing...)"
+                , div [ class "loading-icon" ] [ text "↻" ]
+                ]
 
         Running gameState ->
             viewGameState gameState
@@ -128,13 +131,13 @@ viewGameState gameState =
                             char
 
                         else
-                            "_"
+                            " "
                     )
                 |> List.map
                     (\char ->
-                        span [] [ text char ]
+                        span [ class "character-display" ] [ text char ]
                     )
-                |> div []
+                |> div [ class "letter-container" ]
 
         wordSet =
             gameState.wordData.word
@@ -150,6 +153,12 @@ viewGameState gameState =
                     )
                 |> List.map (\char -> span [] [ text char ])
                 |> div []
+                |> (\badLetters ->
+                        div [ class "bad-guesses-text" ]
+                            [ text "Incorrect guesses: "
+                            , badLetters
+                            ]
+                   )
 
         buttonsHtml =
             "abcdefghijklmnopqrstuvwxyz"
@@ -184,7 +193,7 @@ viewGameState gameState =
             [ onClick Restart
             , class "action-button"
             ]
-            [ text "Restart" ]
+            [ text "⟲ Restart" ]
         , node "link"
             [ href "https://fonts.googleapis.com/css2?family=Handlee&display=swap"
             , rel "stylesheet"

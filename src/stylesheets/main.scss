@@ -10,27 +10,51 @@
 }
 
 body {
+    color: #293c4b;
     font-family: 'Handlee', cursive;
     margin: 0;
     text-align: center;
-    color: #293c4b;
 }
 
-span {
-    font-size: 32px;
+.letter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.character-display {
+    display: inline-block;
+    border-bottom: 2px solid black;
+    font-size: 5vh;
     font-weight: bold;
     margin: 28px 4px 14px 4px;
+    width: 5vw;
+    height: 5vh;
+}
+
+.bad-guesses-text {
+    color: red;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 24px;
 }
 
 // Global button style
 
 button {
+    background-color: transparent;
+    font-family: 'Handlee', cursive;
+    font-size: 1.5rem;
     height: 45px;
-    min-width: 45px;
     margin: 34px 4px 4px 4px;
+    min-width: 45px;
     box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
     -webkit-box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
     -moz-box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
+
+    &.guess-button {
+        font-weight: bold;
+    }
 
     &:active {
         box-shadow: -3px 3px 9px 0px rgba(0, 0, 0, 0.49);
@@ -40,14 +64,45 @@ button {
 }
 
 .hint-text {
-    font-size: 1.15rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
+    -webkit-box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
+    -moz-box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
+    font-size: 1.5rem;
+    font-weight: 500;
     margin: 24px 0px;
 }
 
 .view {
-    height: 100vh;
-    width: 100vw;
     background-image: url("../../assets/paper_texture.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    box-sizing: border-box;
+    height: 100vh;
+    padding: 5vw;
+    width: 100vw;
+}
+
+.loading-view {
+    font-size: 2rem;
+
+    .loading-icon {
+        color: black;
+        font-size: 20vw;
+
+        animation-name: spin;
+        animation-duration: 2000ms;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    }
 }
