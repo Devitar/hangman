@@ -5,6 +5,6 @@
   "scripts": {
     "build": "elm-app build",
     "deploy": "gh-pages -d build",
-    "watch-scss": "sass src/stylesheets/main.scss src/stylesheets/compiled/main.css -w"
+    "watch-scss": "sass src/main.scss public/main.css -w"
   }
 }

@@ -67,7 +67,8 @@ update msg model =
                 Running gameState ->
                     let
                         correctGuess =
-                            if String.contains char gameState.wordData.word then
+                            if (String.contains char gameState.wordData.word) && 
+                                (not <| Set.member char gameState.lettersGuessed ) then
                                 1
 
                             else
@@ -268,56 +269,56 @@ viewGameState gameState =
                 0 ->
                     img
                         [ class "hangman-image"
-                        , src "/assets/game_background.png"
+                        , src "assets/game_background.png"
                         ]
                         []
 
                 1 ->
                     img
                         [ class "hangman-image"
-                        , src "/assets/game_background1.png"
+                        , src "assets/game_background1.png"
                         ]
                         []
 
                 2 ->
                     img
                         [ class "hangman-image"
-                        , src "/assets/game_background2.png"
+                        , src "assets/game_background2.png"
                         ]
                         []
 
                 3 ->
                     img
                         [ class "hangman-image"
-                        , src "/assets/game_background3.png"
+                        , src "assets/game_background3.png"
                         ]
                         []
 
                 4 ->
                     img
                         [ class "hangman-image"
-                        , src "/assets/game_background4.png"
+                        , src "assets/game_background4.png"
                         ]
                         []
 
                 5 ->
                     img
                         [ class "hangman-image"
-                        , src "/assets/game_background5.png"
+                        , src "assets/game_background5.png"
                         ]
                         []
 
                 6 ->
                     img
                         [ class "hangman-image"
-                        , src "/assets/game_background6.png"
+                        , src "assets/game_background6.png"
                         ]
                         []
 
                 _ ->
                     img
                         [ class "hangman-image"
-                        , src "/assets/game_background6.png"
+                        , src "assets/game_background6.png"
                         ]
                         []
 
@@ -362,7 +363,7 @@ viewGameState gameState =
         , winLossModalHtml
         , img 
             [ class "background-image"
-            , src "/assets/paper_texture.jpg"
+            , src "assets/paper_texture.jpg"
             ]
             []
         ]
