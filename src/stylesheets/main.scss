@@ -16,20 +16,13 @@ body {
     color: #293c4b;
 }
 
-h1 {
-    font-size: 30px;
-}
-
-img {
-    margin: 20px 0;
-    max-width: 200px;
-}
-
 span {
     font-size: 32px;
     font-weight: bold;
     margin: 28px 4px 14px 4px;
 }
+
+// Global button style
 
 button {
     height: 45px;
@@ -38,12 +31,12 @@ button {
     box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
     -webkit-box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
     -moz-box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
-}
 
-button:active {
-    box-shadow: -3px 3px 9px 0px rgba(0, 0, 0, 0.49);
-    -webkit-box-shadow: -3px 3px 9px 0px rgba(0, 0, 0, 0.49);
-    -moz-box-shadow: -3px 3px 9px 0px rgba(0, 0, 0, 0.49);
+    &:active {
+        box-shadow: -3px 3px 9px 0px rgba(0, 0, 0, 0.49);
+        -webkit-box-shadow: -3px 3px 9px 0px rgba(0, 0, 0, 0.49);
+        -moz-box-shadow: -3px 3px 9px 0px rgba(0, 0, 0, 0.49);
+    }
 }
 
 .hint-text {

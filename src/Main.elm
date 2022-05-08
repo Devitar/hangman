@@ -22,6 +22,7 @@ type Model
 type alias GameState =
     { wordData : WordData
     , guesses : Set String
+    , showHint : Bool
     }
 
 
@@ -45,6 +46,7 @@ init =
 type Msg
     = Guess String
     | Restart
+    | ShowHint
     | NewWord (Result Http.Error WordData)
 
 
@@ -62,10 +64,18 @@ update msg model =
         Restart ->
             ( Loading, fetchWord )
 
+        ShowHint ->
+            case model of
+                Running gameState ->
+                    ( Running { gameState | showHint = True }, Cmd.none )
+
+                _ ->
+                    ( model, Cmd.none )
+
         NewWord result ->
             case result of
                 Ok data ->
-                    ( Running { wordData = data, guesses = Set.empty }, Cmd.none )
+                    ( Running { wordData = data, guesses = Set.empty, showHint = False }, Cmd.none )
 
                 Err _ ->
                     ( Error, Cmd.none )
@@ -146,19 +156,35 @@ viewGameState gameState =
                 |> String.split ""
                 |> List.map
                     (\char ->
-                        button [ onClick <| Guess char ] [ text char ]
+                        button
+                            [ onClick <| Guess char
+                            , class "guess-button"
+                            ]
+                            [ text char ]
                     )
                 |> div []
 
         hintHtml =
-            div [ class <| "hint-text" ] [ text <| "Hint: " ++ gameState.wordData.hint ]
+            if gameState.showHint == True then
+                div [ class "hint-text" ] [ text <| "Hint: " ++ gameState.wordData.hint ]
+
+            else
+                button
+                    [ onClick ShowHint
+                    , class "action-button"
+                    ]
+                    [ text "Show hint" ]
     in
-    div [ class <| "view" ]
+    div [ class "view" ]
         [ wordHtml
         , hintHtml
         , buttonsHtml
         , failuresHtml
-        , button [ onClick Restart ] [ text "Restart" ]
+        , button
+            [ onClick Restart
+            , class "action-button"
+            ]
+            [ text "Restart" ]
         , node "link"
             [ href "https://fonts.googleapis.com/css2?family=Handlee&display=swap"
             , rel "stylesheet"
