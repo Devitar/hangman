@@ -1,3 +1,8 @@
+# Note to self
+
+elm-app build incorrectly generates relative paths for assets in the generated index.html and css files. They must be
+manually changed back to their correct paths 🙄
+
 # Elm App
 
 This project is bootstrapped with [Create Elm App](https://github.com/halfzebra/create-elm-app).
