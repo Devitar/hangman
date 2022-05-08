@@ -1,8 +1,8 @@
 module Main exposing (..)
 
 import Browser
-import Html exposing (Html, button, div, node, span, text)
-import Html.Attributes exposing (class, href, rel)
+import Html exposing (Html, button, div, img, node, span, text)
+import Html.Attributes exposing (class, href, rel, src)
 import Html.Events exposing (onClick)
 import Http
 import Json.Decode as Decode exposing (Decoder)
@@ -32,10 +32,14 @@ type alias WordData =
     }
 
 
+
+-- Initial state
+
+
 init : ( Model, Cmd Msg )
 init =
     ( Loading
-    , fetchWord
+    , fetchWordData
     )
 
 
@@ -62,7 +66,7 @@ update msg model =
                     ( model, Cmd.none )
 
         Restart ->
-            ( Loading, fetchWord )
+            ( Loading, fetchWordData )
 
         ShowHint ->
             case model of
@@ -81,8 +85,8 @@ update msg model =
                     ( Error, Cmd.none )
 
 
-fetchWord : Cmd Msg
-fetchWord =
+fetchWordData : Cmd Msg
+fetchWordData =
     Http.get
         { url = "https://devitar-api.glitch.me/random-word"
         , expect = Http.expectJson NewWord wordDecoder
@@ -113,7 +117,7 @@ view model =
             viewGameState gameState
 
         Error ->
-            div [] [ text "Error" ]
+            div [] [ text "Oops - something went wrong. Sorry about that!" ]
 
 
 viewGameState : GameState -> Html Msg
@@ -144,13 +148,16 @@ viewGameState gameState =
                 |> String.split ""
                 |> Set.fromList
 
-        failuresHtml =
+        badLettersList =
             gameState.guesses
                 |> Set.toList
                 |> List.filter
                     (\char ->
                         not <| Set.member char wordSet
                     )
+
+        failuresHtml =
+            badLettersList
                 |> List.map (\char -> span [] [ text char ])
                 |> div []
                 |> (\badLetters ->
@@ -159,6 +166,48 @@ viewGameState gameState =
                             , badLetters
                             ]
                    )
+
+        hangmanImagesHtml =
+            case List.length badLettersList of
+                0 ->
+                    img
+                        [ class "hangman-image" ]
+                        []
+
+                1 ->
+                    img
+                        [ class "hangman-image i1" ]
+                        []
+
+                2 ->
+                    img
+                        [ class "hangman-image i2" ]
+                        []
+
+                3 ->
+                    img
+                        [ class "hangman-image i3" ]
+                        []
+
+                4 ->
+                    img
+                        [ class "hangman-image i4" ]
+                        []
+
+                5 ->
+                    img
+                        [ class "hangman-image i5" ]
+                        []
+
+                6 ->
+                    img
+                        [ class "hangman-image i6" ]
+                        []
+
+                _ ->
+                    img
+                        [ class "hangman-image i6" ]
+                        []
 
         buttonsHtml =
             "abcdefghijklmnopqrstuvwxyz"
@@ -185,7 +234,8 @@ viewGameState gameState =
                     [ text "Show hint" ]
     in
     div [ class "view" ]
-        [ wordHtml
+        [ hangmanImagesHtml
+        , wordHtml
         , hintHtml
         , buttonsHtml
         , failuresHtml

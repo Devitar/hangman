@@ -22,6 +22,32 @@ body {
   align-items: center;
 }
 
+.hangman-image {
+  width: 25vw;
+  height: 25vw;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("../../assets/game_background.png");
+}
+.hangman-image.i1 {
+  background-image: url("../../assets/game_background1.png");
+}
+.hangman-image.i2 {
+  background-image: url("../../assets/game_background2.png");
+}
+.hangman-image.i3 {
+  background-image: url("../../assets/game_background3.png");
+}
+.hangman-image.i4 {
+  background-image: url("../../assets/game_background4.png");
+}
+.hangman-image.i5 {
+  background-image: url("../../assets/game_background5.png");
+}
+.hangman-image.i6 {
+  background-image: url("../../assets/game_background6.png");
+}
+
 button {
   background-color: transparent;
   font-family: "Handlee", cursive;
@@ -75,7 +101,7 @@ button:active {
   background-size: cover;
   box-sizing: border-box;
   height: 100vh;
-  padding: 5vw;
+  padding: 0px 5% 5% 5%;
   width: 100vw;
 }
 
