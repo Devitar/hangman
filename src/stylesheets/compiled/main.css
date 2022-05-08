@@ -22,23 +22,6 @@ body {
   align-items: center;
 }
 
-.character-display {
-  display: inline-block;
-  border-bottom: 2px solid black;
-  font-size: 5vh;
-  font-weight: bold;
-  margin: 28px 4px 14px 4px;
-  width: 5vw;
-  height: 5vh;
-}
-
-.bad-guesses-text {
-  color: red;
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-top: 24px;
-}
-
 button {
   background-color: transparent;
   font-family: "Handlee", cursive;
@@ -67,6 +50,23 @@ button:active {
   font-size: 1.5rem;
   font-weight: 500;
   margin: 24px 0px;
+}
+
+.character-display {
+  display: inline-block;
+  border-bottom: 2px solid black;
+  font-size: 5vh;
+  font-weight: bold;
+  margin: 28px 4px 14px 4px;
+  width: 5vw;
+  height: 5vh;
+}
+
+.bad-guesses-text {
+  color: red;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 24px;
 }
 
 .view {

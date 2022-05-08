@@ -22,23 +22,6 @@ body {
     align-items: center;
 }
 
-.character-display {
-    display: inline-block;
-    border-bottom: 2px solid black;
-    font-size: 5vh;
-    font-weight: bold;
-    margin: 28px 4px 14px 4px;
-    width: 5vw;
-    height: 5vh;
-}
-
-.bad-guesses-text {
-    color: red;
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-top: 24px;
-}
-
 // Global button style
 
 button {
@@ -63,6 +46,8 @@ button {
     }
 }
 
+// Text styles
+
 .hint-text {
     background-color: rgba(255, 255, 255, 0.5);
     box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
@@ -72,6 +57,25 @@ button {
     font-weight: 500;
     margin: 24px 0px;
 }
+
+.character-display {
+    display: inline-block;
+    border-bottom: 2px solid black;
+    font-size: 5vh;
+    font-weight: bold;
+    margin: 28px 4px 14px 4px;
+    width: 5vw;
+    height: 5vh;
+}
+
+.bad-guesses-text {
+    color: red;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 24px;
+}
+
+// Views
 
 .view {
     background-image: url("../../assets/paper_texture.jpg");
