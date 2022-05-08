@@ -2,7 +2,7 @@ module Main exposing (..)
 
 import Browser
 import Html exposing (Html, button, div, img, node, span, text)
-import Html.Attributes exposing (class, classList, href, rel)
+import Html.Attributes exposing (class, classList, href, rel, src, style)
 import Html.Events exposing (onClick)
 import Http
 import Json.Decode as Decode exposing (Decoder)
@@ -78,9 +78,8 @@ update msg model =
 
                             else
                                 0
-
                         hasWon =
-                            String.length gameState.wordData.word == gameState.correctGuesses + correctGuess
+                            gameState.correctGuesses + correctGuess >= String.length gameState.wordData.word 
 
                         hasLost =
                             gameState.incorrectGuesses + incorrectGuess >= 6
@@ -259,42 +258,58 @@ viewGameState gameState =
             case List.length badLettersList of
                 0 ->
                     img
-                        [ class "hangman-image" ]
+                        [ class "hangman-image"
+                        , src "/assets/game_background.png"
+                        ]
                         []
 
                 1 ->
                     img
-                        [ class "hangman-image i1" ]
+                        [ class "hangman-image"
+                        , src "/assets/game_background1.png"
+                        ]
                         []
 
                 2 ->
                     img
-                        [ class "hangman-image i2" ]
+                        [ class "hangman-image"
+                        , src "/assets/game_background2.png"
+                        ]
                         []
 
                 3 ->
                     img
-                        [ class "hangman-image i3" ]
+                        [ class "hangman-image"
+                        , src "/assets/game_background3.png"
+                        ]
                         []
 
                 4 ->
                     img
-                        [ class "hangman-image i4" ]
+                        [ class "hangman-image"
+                        , src "/assets/game_background4.png"
+                        ]
                         []
 
                 5 ->
                     img
-                        [ class "hangman-image i5" ]
+                        [ class "hangman-image"
+                        , src "/assets/game_background5.png"
+                        ]
                         []
 
                 6 ->
                     img
-                        [ class "hangman-image i6" ]
+                        [ class "hangman-image"
+                        , src "/assets/game_background6.png"
+                        ]
                         []
 
                 _ ->
                     img
-                        [ class "hangman-image i6" ]
+                        [ class "hangman-image"
+                        , src "/assets/game_background6.png"
+                        ]
                         []
 
         buttonsHtml =
@@ -336,9 +351,9 @@ viewGameState gameState =
             ]
             [ text "⟲ Restart" ]
         , winLossModalHtml
-        , node "link"
-            [ href "https://fonts.googleapis.com/css2?family=Handlee&display=swap"
-            , rel "stylesheet"
+        , img 
+            [ class "background-image"
+            , src "/assets/paper_texture.jpg"
             ]
             []
         ]

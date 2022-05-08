@@ -25,39 +25,13 @@ body {
 .hangman-image {
     width: 25vw;
     height: 25vw;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-image: url("../../assets/game_background.png");
-
-    &.i1 {
-        background-image: url("../../assets/game_background1.png");
-    }
-
-    &.i2 {
-        background-image: url("../../assets/game_background2.png");
-    }
-
-    &.i3 {
-        background-image: url("../../assets/game_background3.png");
-    }
-
-    &.i4 {
-        background-image: url("../../assets/game_background4.png");
-    }
-
-    &.i5 {
-        background-image: url("../../assets/game_background5.png");
-    }
-
-    &.i6 {
-        background-image: url("../../assets/game_background6.png");
-    }
 }
 
 .win-loss-modal {
     align-items: center;
     background-color: white;
     border: 2px solid black;
+    box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
     color: black;
     display: flex;
     flex-direction: column;
@@ -76,10 +50,6 @@ body {
     width: 50vw;
     z-index: 10;
 
-    box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
-    -webkit-box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
-    -moz-box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
-
     &.displayed {
         opacity: 1;
         pointer-events: all;
@@ -96,8 +66,6 @@ button {
     margin: 34px 4px 4px 4px;
     min-width: 45px;
     box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
-    -webkit-box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
-    -moz-box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
 
     &.guess-button {
         font-weight: bold;
@@ -113,8 +81,6 @@ button {
 
     &:active {
         box-shadow: -3px 3px 9px 0px rgba(0, 0, 0, 0.49);
-        -webkit-box-shadow: -3px 3px 9px 0px rgba(0, 0, 0, 0.49);
-        -moz-box-shadow: -3px 3px 9px 0px rgba(0, 0, 0, 0.49);
     }
 }
 
@@ -123,8 +89,6 @@ button {
 .hint-text {
     background-color: rgba(255, 255, 255, 0.5);
     box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
-    -webkit-box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
-    -moz-box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
     font-size: 1.5rem;
     font-weight: 500;
     margin: 24px 0px;
@@ -143,13 +107,20 @@ button {
 // Views
 
 .view {
-    background-image: url("../../assets/paper_texture.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
     box-sizing: border-box;
     height: 100vh;
     padding: 0px 5% 5% 5%;
     width: 100vw;
+
+    .background-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        object-fit: cover;
+    }
 }
 
 .loading-view {
