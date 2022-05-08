@@ -15,14 +15,18 @@ import Set exposing (Set)
 
 type Model
     = Loading
-    | Running GameState
     | Error
+    | Running GameState
 
 
 type alias GameState =
     { wordData : WordData
     , guesses : Set String
+    , correctGuesses : Int
+    , incorrectGuesses : Int
     , showHint : Bool
+    , hasWon : Bool
+    , hasLost : Bool
     }
 
 
@@ -60,7 +64,56 @@ update msg model =
         Guess char ->
             case model of
                 Running gameState ->
-                    ( Running { gameState | guesses = Set.insert char gameState.guesses }, Cmd.none )
+                    let
+                        correctGuess =
+                            if String.contains char gameState.wordData.word then
+                                1
+
+                            else
+                                0
+
+                        incorrectGuess =
+                            if not <| String.contains char gameState.wordData.word then
+                                1
+
+                            else
+                                0
+
+                        hasWon =
+                            String.length gameState.wordData.word == gameState.correctGuesses + correctGuess
+
+                        hasLost =
+                            gameState.incorrectGuesses + incorrectGuess >= 6
+                    in
+                    if hasWon then
+                        ( Running
+                            { gameState
+                                | hasWon = True
+                                , correctGuesses = String.length gameState.wordData.word
+                                , guesses = Set.insert char gameState.guesses
+                            }
+                        , Cmd.none
+                        )
+
+                    else if hasLost then
+                        ( Running
+                            { gameState
+                                | hasLost = True
+                                , incorrectGuesses = 6
+                                , guesses = Set.insert char gameState.guesses
+                            }
+                        , Cmd.none
+                        )
+
+                    else
+                        ( Running
+                            { gameState
+                                | guesses = Set.insert char gameState.guesses
+                                , correctGuesses = gameState.correctGuesses + correctGuess
+                                , incorrectGuesses = gameState.incorrectGuesses + incorrectGuess
+                            }
+                        , Cmd.none
+                        )
 
                 _ ->
                     ( model, Cmd.none )
@@ -79,7 +132,17 @@ update msg model =
         NewWord result ->
             case result of
                 Ok data ->
-                    ( Running { wordData = data, guesses = Set.empty, showHint = False }, Cmd.none )
+                    ( Running
+                        { wordData = data
+                        , guesses = Set.empty
+                        , showHint = False
+                        , incorrectGuesses = 0
+                        , correctGuesses = 0
+                        , hasWon = False
+                        , hasLost = False
+                        }
+                    , Cmd.none
+                    )
 
                 Err _ ->
                     ( Error, Cmd.none )
@@ -143,6 +206,32 @@ viewGameState gameState =
                     (\char ->
                         Set.member char wordSet
                     )
+
+        shouldDisplayOutcome =
+            gameState.hasWon || gameState.hasLost
+
+        winLossModalHtml =
+            div
+                [ classList
+                    [ ( "win-loss-modal", True )
+                    , ( "displayed", shouldDisplayOutcome )
+                    ]
+                ]
+                [ text <|
+                    if gameState.hasWon then
+                        "You won!"
+
+                    else if gameState.hasLost then
+                        "You lost! The word was: " ++ gameState.wordData.word
+
+                    else
+                        "If you can see this, something has gone horribly wrong..."
+                , button
+                    [ onClick Restart
+                    , class "action-button"
+                    ]
+                    [ text "⟲ Try again?" ]
+                ]
 
         wordHtml =
             gameState.wordData.word
@@ -246,6 +335,7 @@ viewGameState gameState =
             , class "action-button"
             ]
             [ text "⟲ Restart" ]
+        , winLossModalHtml
         , node "link"
             [ href "https://fonts.googleapis.com/css2?family=Handlee&display=swap"
             , rel "stylesheet"
