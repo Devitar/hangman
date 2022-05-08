@@ -20,13 +20,14 @@ type Model
 
 
 type alias GameState =
-    { wordData : WordData
-    , guesses : Set String
-    , correctGuesses : Int
-    , incorrectGuesses : Int
-    , showHint : Bool
-    , hasWon : Bool
+    { correctGuesses : Int
     , hasLost : Bool
+    , hasWon : Bool
+    , incorrectGuesses : Int
+    , lettersGuessed : Set String
+    , maxCorrectGuesses : Int
+    , showHint : Bool
+    , wordData : WordData
     }
 
 
@@ -79,7 +80,7 @@ update msg model =
                             else
                                 0
                         hasWon =
-                            gameState.correctGuesses + correctGuess >= String.length gameState.wordData.word 
+                            gameState.correctGuesses + correctGuess >= gameState.maxCorrectGuesses
 
                         hasLost =
                             gameState.incorrectGuesses + incorrectGuess >= 6
@@ -89,7 +90,7 @@ update msg model =
                             { gameState
                                 | hasWon = True
                                 , correctGuesses = String.length gameState.wordData.word
-                                , guesses = Set.insert char gameState.guesses
+                                , lettersGuessed = Set.insert char gameState.lettersGuessed
                             }
                         , Cmd.none
                         )
@@ -99,7 +100,7 @@ update msg model =
                             { gameState
                                 | hasLost = True
                                 , incorrectGuesses = 6
-                                , guesses = Set.insert char gameState.guesses
+                                , lettersGuessed = Set.insert char gameState.lettersGuessed
                             }
                         , Cmd.none
                         )
@@ -107,7 +108,7 @@ update msg model =
                     else
                         ( Running
                             { gameState
-                                | guesses = Set.insert char gameState.guesses
+                                | lettersGuessed = Set.insert char gameState.lettersGuessed
                                 , correctGuesses = gameState.correctGuesses + correctGuess
                                 , incorrectGuesses = gameState.incorrectGuesses + incorrectGuess
                             }
@@ -131,14 +132,22 @@ update msg model =
         NewWord result ->
             case result of
                 Ok data ->
+                    let
+                        maxCorrectGuesses = 
+                            data.word
+                                |> String.split ""
+                                |> Set.fromList
+                                |> Set.size
+                    in
                     ( Running
-                        { wordData = data
-                        , guesses = Set.empty
-                        , showHint = False
-                        , incorrectGuesses = 0
-                        , correctGuesses = 0
-                        , hasWon = False
+                        { correctGuesses = 0
                         , hasLost = False
+                        , hasWon = False
+                        , incorrectGuesses = 0
+                        , lettersGuessed = Set.empty
+                        , maxCorrectGuesses = maxCorrectGuesses
+                        , showHint = False
+                        , wordData = data
                         }
                     , Cmd.none
                     )
@@ -191,7 +200,7 @@ viewGameState gameState =
                 |> Set.fromList
 
         badLettersList =
-            gameState.guesses
+            gameState.lettersGuessed
                 |> Set.toList
                 |> List.filter
                     (\char ->
@@ -199,7 +208,7 @@ viewGameState gameState =
                     )
 
         goodLettersList =
-            gameState.guesses
+            gameState.lettersGuessed
                 |> Set.toList
                 |> List.filter
                     (\char ->
@@ -240,7 +249,7 @@ viewGameState gameState =
                         if char == " " then
                             " "
 
-                        else if Set.member char gameState.guesses then
+                        else if Set.member char gameState.lettersGuessed then
                             char
 
                         else
