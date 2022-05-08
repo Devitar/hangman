@@ -28,8 +28,8 @@ body {
 }
 @media only screen and (max-width: 800px) {
   .hangman-image {
-    width: 50vw;
-    height: 50vw;
+    width: 75vw;
+    height: 75vw;
   }
 }
 
@@ -59,6 +59,14 @@ body {
 .win-loss-modal.displayed {
   opacity: 1;
   pointer-events: all;
+}
+@media only screen and (max-width: 800px) {
+  .win-loss-modal {
+    height: 90vw;
+    margin-left: -45vw;
+    margin-top: -45vw;
+    width: 90vw;
+  }
 }
 
 button {
@@ -137,11 +145,23 @@ button:active {
 }
 
 .loading-view {
+  box-sizing: border-box;
   font-size: 2rem;
+  height: 100vh;
+  padding: 10% 5% 5% 5%;
+  width: 100vw;
 }
 .loading-view .loading-icon {
   color: black;
   font-size: 20vw;
+  height: 20vw;
+  left: 50%;
+  margin-left: -10vw;
+  margin-top: -10vw;
+  position: fixed;
+  top: 50%;
+  width: 20vw;
+  z-index: 10;
   animation-name: spin;
   animation-duration: 2000ms;
   animation-iteration-count: infinite;

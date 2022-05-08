@@ -228,7 +228,7 @@ viewGameState gameState =
                 ]
                 [ text <|
                     if gameState.hasWon then
-                        "You won!"
+                        "You won! The word was: " ++ gameState.wordData.word
 
                     else if gameState.hasLost then
                         "You lost! The word was: " ++ gameState.wordData.word
