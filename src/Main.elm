@@ -2,7 +2,7 @@ module Main exposing (..)
 
 import Browser
 import Html exposing (Html, button, div, img, node, span, text)
-import Html.Attributes exposing (class, href, rel, src)
+import Html.Attributes exposing (class, classList, href, rel)
 import Html.Events exposing (onClick)
 import Http
 import Json.Decode as Decode exposing (Decoder)
@@ -123,6 +123,27 @@ view model =
 viewGameState : GameState -> Html Msg
 viewGameState gameState =
     let
+        wordSet =
+            gameState.wordData.word
+                |> String.split ""
+                |> Set.fromList
+
+        badLettersList =
+            gameState.guesses
+                |> Set.toList
+                |> List.filter
+                    (\char ->
+                        not <| Set.member char wordSet
+                    )
+
+        goodLettersList =
+            gameState.guesses
+                |> Set.toList
+                |> List.filter
+                    (\char ->
+                        Set.member char wordSet
+                    )
+
         wordHtml =
             gameState.wordData.word
                 |> String.split ""
@@ -139,33 +160,11 @@ viewGameState gameState =
                     )
                 |> List.map
                     (\char ->
-                        span [ class "character-display" ] [ text char ]
+                        span
+                            [ class "character-display" ]
+                            [ text char ]
                     )
                 |> div [ class "letter-container" ]
-
-        wordSet =
-            gameState.wordData.word
-                |> String.split ""
-                |> Set.fromList
-
-        badLettersList =
-            gameState.guesses
-                |> Set.toList
-                |> List.filter
-                    (\char ->
-                        not <| Set.member char wordSet
-                    )
-
-        failuresHtml =
-            badLettersList
-                |> List.map (\char -> span [] [ text char ])
-                |> div []
-                |> (\badLetters ->
-                        div [ class "bad-guesses-text" ]
-                            [ text "Incorrect guesses: "
-                            , badLetters
-                            ]
-                   )
 
         hangmanImagesHtml =
             case List.length badLettersList of
@@ -216,7 +215,11 @@ viewGameState gameState =
                     (\char ->
                         button
                             [ onClick <| Guess char
-                            , class "guess-button"
+                            , classList
+                                [ ( "guess-button", True )
+                                , ( "incorrect", List.member char badLettersList )
+                                , ( "correct", List.member char goodLettersList )
+                                ]
                             ]
                             [ text char ]
                     )
@@ -238,7 +241,6 @@ viewGameState gameState =
         , wordHtml
         , hintHtml
         , buttonsHtml
-        , failuresHtml
         , button
             [ onClick Restart
             , class "action-button"
