@@ -1,8 +1,8 @@
 module Main exposing (..)
 
 import Browser
-import Html exposing (Html, button, div, img, node, span, text)
-import Html.Attributes exposing (class, classList, href, rel, src, style)
+import Html exposing (Html, button, div, img, span, text)
+import Html.Attributes exposing (class, classList, src)
 import Html.Events exposing (onClick)
 import Http
 import Json.Decode as Decode exposing (Decoder)
@@ -67,8 +67,10 @@ update msg model =
                 Running gameState ->
                     let
                         correctGuess =
-                            if (String.contains char gameState.wordData.word) && 
-                                (not <| Set.member char gameState.lettersGuessed ) then
+                            if
+                                String.contains char gameState.wordData.word
+                                    && (not <| Set.member char gameState.lettersGuessed)
+                            then
                                 1
 
                             else
@@ -80,6 +82,7 @@ update msg model =
 
                             else
                                 0
+
                         hasWon =
                             gameState.correctGuesses + correctGuess >= gameState.maxCorrectGuesses
 
@@ -134,7 +137,7 @@ update msg model =
             case result of
                 Ok data ->
                     let
-                        maxCorrectGuesses = 
+                        maxCorrectGuesses =
                             data.word
                                 |> String.split ""
                                 |> Set.fromList
@@ -361,7 +364,7 @@ viewGameState gameState =
             ]
             [ text "⟲ Restart" ]
         , winLossModalHtml
-        , img 
+        , img
             [ class "background-image"
             , src "assets/paper_texture.jpg"
             ]
