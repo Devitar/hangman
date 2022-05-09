@@ -6,6 +6,6 @@
     "build": "elm-app build",
     "deploy": "gh-pages -d build",
     "start": "elm-app start",
-    "watch-scss": "sass src/main.scss src/stylesheets/main.css -w"
+    "watch-scss": "sass src/main.scss public/main.css -w"
   }
 }

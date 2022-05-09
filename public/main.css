@@ -32,6 +32,13 @@ body {
     height: 75vw;
   }
 }
+@media only screen and (max-height: 490px) {
+  .hangman-image {
+    margin-top: -10%;
+    width: 50vw;
+    height: 50vw;
+  }
+}
 
 .win-loss-modal {
   align-items: center;
@@ -90,6 +97,14 @@ button.guess-button.correct {
 }
 @media only screen and (max-width: 800px) {
   button.guess-button {
+    margin: 12px 4px 4px 4px;
+    height: 24px;
+    min-width: 24px;
+    font-size: 1rem;
+  }
+}
+@media only screen and (max-height: 490px) {
+  button.action-button {
     margin: 12px 4px 4px 4px;
     height: 24px;
     min-width: 24px;

@@ -30,6 +30,13 @@ body {
         width: 75vw;
         height: 75vw;
     }
+
+    // For extremely small screens
+    @media only screen and (max-height: 490px) {
+        margin-top: -10%;
+        width: 50vw;
+        height: 50vw;
+    }
 }
 
 .win-loss-modal {
@@ -92,6 +99,17 @@ button {
         }
 
         @media only screen and (max-width: 800px) {
+            margin: 12px 4px 4px 4px;
+            height: 24px;
+            min-width: 24px;
+            font-size: 1rem;
+        }
+    }
+
+    &.action-button {
+
+        // For extremely small screens
+        @media only screen and (max-height: 490px) {
             margin: 12px 4px 4px 4px;
             height: 24px;
             min-width: 24px;
@@ -186,3 +204,6 @@ button {
         }
     }
 }
+
+// Notes to self
+// My iphone 12 mini appears to have a resolution of 280 x 450 in chrome, far smaller than the SE emulator shows
