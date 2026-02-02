@@ -33,7 +33,7 @@ type alias GameState =
 
 type alias WordData =
     { word : String
-    , hint : String
+    , definition : String
     }
 
 
@@ -163,7 +163,8 @@ update msg model =
 fetchWordData : Cmd Msg
 fetchWordData =
     Http.get
-        { url = "https://devitar-api.glitch.me/random-word"
+        { url = "https://portfolio-backend-mzgn.onrender.com/random_word"
+        -- { url = "http://localhost:5000/random_word"
         , expect = Http.expectJson NewWord wordDecoder
         }
 
@@ -172,7 +173,7 @@ wordDecoder : Decoder WordData
 wordDecoder =
     Decode.map2 WordData
         (Decode.field "word" Decode.string)
-        (Decode.field "hint" Decode.string)
+        (Decode.field "definition" Decode.string)
 
 
 
@@ -184,7 +185,7 @@ view model =
     case model of
         Loading ->
             div [ class "loading-view" ]
-                [ text "Loading (This may take a minute if this is your first time playing...)"
+                [ text "Loading (This may take a minute or two if the server is waking up)..."
                 , div [ class "loading-icon" ] [ text "↻" ]
                 ]
 
@@ -192,7 +193,7 @@ view model =
             viewGameState gameState
 
         Error ->
-            div [] [ text "Oops - something went wrong. Sorry about that!" ]
+            div [] [ text "Oops - something went wrong. Sorry about that! Please try refreshing the page." ]
 
 
 viewGameState : GameState -> Html Msg
@@ -344,7 +345,7 @@ viewGameState gameState =
 
         hintHtml =
             if gameState.showHint == True then
-                div [ class "hint-text" ] [ text <| "Hint: " ++ gameState.wordData.hint ]
+                div [ class "hint-text" ] [ text <| "Hint: " ++ gameState.wordData.definition ]
 
             else
                 button
