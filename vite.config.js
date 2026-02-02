@@ -3,5 +3,6 @@ import elmPlugin from 'vite-plugin-elm'
 
 export default defineConfig({
   plugins: [elmPlugin()],
-  publicDir: 'public'
+  publicDir: 'public',
+  base: '/hangman/'
 })
