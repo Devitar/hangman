@@ -1,11 +1,18 @@
 {
-  "devDependencies": {
-    "gh-pages": "^3.2.3"
-  },
+  "name": "hangman",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "build": "elm-app build",
-    "deploy": "gh-pages -d build",
-    "start": "elm-app start",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "vite build && gh-pages -d dist",
     "watch-scss": "sass src/main.scss public/main.css -w"
+  },
+  "devDependencies": {
+    "gh-pages": "^3.2.3",
+    "sass": "^1.83.0",
+    "vite": "^6.0.0",
+    "vite-plugin-elm": "^3.0.1"
   }
 }
