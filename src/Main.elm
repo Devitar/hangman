@@ -273,56 +273,56 @@ viewGameState gameState =
                 0 ->
                     img
                         [ class "hangman-image"
-                        , src "assets/game_background.png"
+                        , src "assets/game_background.webp"
                         ]
                         []
 
                 1 ->
                     img
                         [ class "hangman-image"
-                        , src "assets/game_background1.png"
+                        , src "assets/game_background1.webp"
                         ]
                         []
 
                 2 ->
                     img
                         [ class "hangman-image"
-                        , src "assets/game_background2.png"
+                        , src "assets/game_background2.webp"
                         ]
                         []
 
                 3 ->
                     img
                         [ class "hangman-image"
-                        , src "assets/game_background3.png"
+                        , src "assets/game_background3.webp"
                         ]
                         []
 
                 4 ->
                     img
                         [ class "hangman-image"
-                        , src "assets/game_background4.png"
+                        , src "assets/game_background4.webp"
                         ]
                         []
 
                 5 ->
                     img
                         [ class "hangman-image"
-                        , src "assets/game_background5.png"
+                        , src "assets/game_background5.webp"
                         ]
                         []
 
                 6 ->
                     img
                         [ class "hangman-image"
-                        , src "assets/game_background6.png"
+                        , src "assets/game_background6.webp"
                         ]
                         []
 
                 _ ->
                     img
                         [ class "hangman-image"
-                        , src "assets/game_background6.png"
+                        , src "assets/game_background6.webp"
                         ]
                         []
 
