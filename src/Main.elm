@@ -326,8 +326,8 @@ viewGameState gameState =
                         ]
                         []
 
-        buttonsHtml =
-            "abcdefghijklmnopqrstuvwxyz"
+        keyboardRow letters =
+            letters
                 |> String.split ""
                 |> List.map
                     (\char ->
@@ -341,7 +341,14 @@ viewGameState gameState =
                             ]
                             [ text char ]
                     )
-                |> div []
+                |> div [ class "keyboard-row" ]
+
+        buttonsHtml =
+            div [ class "keyboard" ]
+                [ keyboardRow "qwertyuiop"
+                , keyboardRow "asdfghjkl"
+                , keyboardRow "zxcvbnm"
+                ]
 
         hintHtml =
             if gameState.showHint == True then
