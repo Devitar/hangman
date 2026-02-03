@@ -82,26 +82,23 @@ button {
   font-family: "Handlee", cursive;
   font-size: 1.5rem;
   height: 45px;
-  margin: 34px 4px 4px 4px;
+  margin: 16px 4px 4px 4px;
   min-width: 45px;
   box-shadow: -6px 7px 9px 0px rgba(0, 0, 0, 0.49);
 }
 button.guess-button {
   font-weight: bold;
+  width: 8vw;
+  height: 8vw;
+  min-width: unset;
+  font-size: clamp(0.75rem, 3vw, 1.5rem);
+  margin: 0.5vw;
 }
 button.guess-button.incorrect {
   background-color: rgba(255, 0, 0, 0.5);
 }
 button.guess-button.correct {
   background-color: rgba(0, 255, 0, 0.5);
-}
-@media only screen and (max-width: 800px) {
-  button.guess-button {
-    margin: 12px 4px 4px 4px;
-    height: 24px;
-    min-width: 24px;
-    font-size: 1rem;
-  }
 }
 @media only screen and (max-height: 490px) {
   button.action-button {
@@ -141,6 +138,18 @@ button:active {
   .character-display {
     margin: 4px;
   }
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
 }
 
 .view {
