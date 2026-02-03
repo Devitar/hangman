@@ -367,7 +367,7 @@ viewGameState gameState =
         , winLossModalHtml
         , img
             [ class "background-image"
-            , src "assets/paper_texture.jpg"
+            , src "assets/paper_texture.webp"
             ]
             []
         ]
